@@ -1,8 +1,9 @@
+import React, { useState } from "react";
 import Expenses from "./components/Expenses/Expenses";
 import NewExpense from "./components/NewExpense/NewExpense";
 
 function App(props) {
-  const expenses = [
+  const DUMMY_EXPENSES = [
     {
       id: "e1",
       title: "Toilet Paper",
@@ -24,16 +25,23 @@ function App(props) {
     },
   ];
 
+  const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
+
   const addExpenseHandler = (expense) => {
-    console.log("In App");
-    console.log(expense);
+    setExpenses((prevExpenses) => {
+      return [expense, ...prevExpenses];
+    });
   };
 
+  console.log(expenses);
+
   return (
-    <div>
-      <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expenses} />
-    </div>
+    <React.StrictMode>
+      <div>
+        <NewExpense onAddExpense={addExpenseHandler} />
+        <Expenses items={expenses} />
+      </div>
+    </React.StrictMode>
   );
 }
 
